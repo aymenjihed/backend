@@ -8,15 +8,15 @@
   ],
   "env": {
     "NODE_ENV": "production",
-    "PORT": "$PORT",
-    "HOST": "$HOST",
-    "HOST_URL": "$HOST_URL",
-    "API_KEY": "$API_KEY",
-    "AUTH_DOMAIN": "$AUTH_DOMAIN",
-    "DATABASE_URL": "$DATABASE_URL",
-    "PROJECT_ID": "$PROJECT_ID",
-    "STORAGE_BUCKET": "$STORAGE_BUCKET",
-    "MESSAGING_SENDER_ID": "$MESSAGING_SENDER_ID",
-    "APP_ID": "$APP_ID"
+    "PORT": 8080,
+    "HOST":localhost,
+    "HOST_URL":http://localhost:8080,
+    "API_KEY": AIzaSyCiUKNjJ174lF8VuvJdz7YSq1eRDBUuW1c,
+    "AUTH_DOMAIN": taxi-express-1eddb.firebaseapp.com,
+    "DATABASE_URL": https://taxi-express-1eddb-default-rtdb.firebaseio.com,
+    "PROJECT_ID": taxi-express-1eddb,
+    "STORAGE_BUCKET":taxi-express-1eddb.appspot.com,
+    "MESSAGING_SENDER_ID": 459271632494,
+    "APP_ID": 1:459271632494:web:4e2b609a8eb0180eef187f
   }
 }
