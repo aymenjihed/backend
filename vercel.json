@@ -7,8 +7,8 @@
     { "src": "/(.*)", "dest": "index.js" }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "PORT": 8080,
+    "NODE_ENV": "production"
+    "PORT": 8080
     "HOST":localhost
     "HOST_URL":http://localhost:8080
     "API_KEY": AIzaSyCiUKNjJ174lF8VuvJdz7YSq1eRDBUuW1c
