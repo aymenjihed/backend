@@ -15,4 +15,4 @@ app.use(bodyParser.json());
 app.use('/api', chauffeurRoutes.routes);
 app.use('/api', adminRoutes.routes);
 
-app.listen(config.port, () => console.log('App is listening on url http://localhost:' + config.port));
+app.listen(config.port, () => console.log('App is listening on url https://backend-pi-sage-90.vercel.app/:' + config.port));
