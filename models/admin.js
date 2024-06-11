@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
 
 class Admin {
-  constructor(email, password) {
+  constructor(email, password,id) {
     this.email = email;
     this.password = password;
+    this.id=id;
   }
 
   async hashPassword() {

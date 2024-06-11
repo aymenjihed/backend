@@ -4,6 +4,7 @@ const firebase = require('../db');
 const firestore = firebase.firestore();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Admin = require('../models/admin'); // Import de la classe Chauffeur
 
 
 const loginAdmin = async (req, res) => {
@@ -37,26 +38,45 @@ const loginAdmin = async (req, res) => {
   
 const getAllAdmin = async (req, res, next) => {
   try {
-    const adminCollection = await firestore.collection('admin');
-    const data = await adminCollection.get();
-    const adminsArray = [];
-
+    const admin = await firestore.collection('admin');
+    const data = await admin.get();
+    const adminArray = [];
     if (data.empty) {
-      res.status(404).send('No admin record found');
+        res.status(404).send('No admin record found');
     } else {
-      data.forEach(doc => {
-        // Creating an admin object from Firestore data
-        const admin = new Admin(doc.data().email, doc.data().password);
-        adminsArray.push(admin);
-      });
-      res.send(adminsArray);
+        data.forEach(doc => {
+            const admine = new Admin(
+              
+                doc.data().email,
+                doc.data().password,
+                doc.data().id,
+              
+            );
+            adminArray.push(admine);
+        });
+        res.send(adminArray);
     }
-  } catch (error) {
+} catch (error) {
     res.status(400).send(error.message);
-  }
+}
+}
+
+const updateAdmin = async (req, res, next)=> {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+    const admin = await firestore.collection('admin').doc(id);
+    await admin.update(data);
+    res.send('admin record updated successfully');
+} catch (error) {
+    res.status(400).send(error.message);
+}
+
+  
 }
 
 module.exports = {
   getAllAdmin,
-  loginAdmin
+  loginAdmin,
+  updateAdmin
 }

@@ -3,16 +3,12 @@
 const firebase = require('../db');
 const Chauffeur = require('../models/chauffeur'); // Import de la classe Chauffeur
 const firestore = firebase.firestore();
+const firebaseAdmin = require('firebase-admin');
 
-const addChauffeur = async (req, res, next) => {
-    try {
-        const data = req.body;
-        await firestore.collection('Chauffeurs').doc().set(data); // Utilisation de la collection 'chauffeurs'
-        res.send('Record saved successfully');
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
+
+const deleteUser = async (uid) => {
+    return firebaseAdmin.auth().deleteUser(uid);
+};
 
 const getAllChauffeurs = async (req, res, next) => {
     try {
@@ -33,8 +29,8 @@ const getAllChauffeurs = async (req, res, next) => {
                     doc.data().longitude,
                     doc.data().motdepasse,
                     doc.data().positionActuelle,
-                    doc.data().txtFirstName,
-                    doc.data().txtLastName,
+                    doc.data().nom,
+                    doc.data().prenom,
                     doc.data().ville,
                     doc.data().NumeroDeTel,
                     doc.data().DateDeNaissance,
@@ -71,6 +67,16 @@ const updateChauffeur = async (req, res, next) => {
         const chauffeur = await firestore.collection('Chauffeurs').doc(id);
         await chauffeur.update(data);
         res.send('Chauffeur record updated successfully');
+          // Mettre à jour le mot de passe de l'utilisateur
+          if (data.motdepasse) {
+            // Récupérer l'utilisateur correspondant à ce chauffeur
+            const userRecord = await firebaseAdmin.auth().getUserByEmail(data.email); // Suppose que vous avez le champ email dans vos données
+
+            // Mettre à jour le mot de passe
+            await firebaseAdmin.auth().updateUser(userRecord.uid, {
+                password: data.motdepasse
+            });
+        }
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -79,15 +85,16 @@ const updateChauffeur = async (req, res, next) => {
 const deleteChauffeur = async (req, res, next) => {
     try {
         const id = req.params.id;
+        await deleteUser(id);
         await firestore.collection('Chauffeurs').doc(id).delete();
-        res.send('Record deleted successfully');
+        res.send('Chauffeur deleted successfully');
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
 
 module.exports = {
-    addChauffeur,
+   
     getAllChauffeurs,
     getChauffeur,
     updateChauffeur,

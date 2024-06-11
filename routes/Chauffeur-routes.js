@@ -1,5 +1,5 @@
 const express = require('express');
-const {addChauffeur, 
+const {
        getAllChauffeurs, 
        getChauffeur,
        updateChauffeur,
@@ -8,7 +8,7 @@ const {addChauffeur,
 
 const router = express.Router();
 
-router.post('/chauffeur', addChauffeur);
+
 router.get('/chauffeurs', getAllChauffeurs);
 router.get('/chauffeur/:id',getChauffeur);
 router.put('/chauffeur/:id', updateChauffeur);
